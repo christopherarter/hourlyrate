@@ -39,7 +39,7 @@
 </head>
 
 <body class="bg-gradient-to-b from-gray-900 to-orange-900 via-gray-900 p-8 h-screen md:flex md:flex-col md:justify-center">
-    <div x-data="calculator()" x-init="calculateHourlyRate()" class="max-w-md mx-auto md:max-w-2xl">
+    <main x-data="calculator()" x-init="calculateHourlyRate()" class="max-w-md mx-auto md:max-w-2xl">
         <div class="flex flex-col mb-8 text-white">
             <div class="flex gap-2 items-center justify-center mb-8">
                 <div class="w-10 bg-orange-500 rounded-full py-1 px-1">
@@ -62,45 +62,50 @@
         </div>
         <div class="space-y-4 bg-white rounded-xl shadow-2xl overflow-hidden p-6">
             <div>
-                <label for="desired-monthly-income" class="block text-sm font-medium leading-6 text-gray-900">Desired
-                    Monthly Income (after taxes & insurance)</label>
+                <label for="desired-monthly-income" class="block text-sm font-medium leading-6 text-gray-900">Desired Monthly Income (after taxes & insurance)</label>
                 <div class="mt-2 flex rounded-md shadow-sm">
-                    <span
-                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">$</span>
+                    <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm" aria-hidden="true">$</span>
                     <input type="number" x-model="defaults.desiredMonthlyIncome" id="desired-monthly-income"
-                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        aria-describedby="desired-monthly-income-description">
                 </div>
+                <p id="desired-monthly-income-description" class="sr-only">Enter your desired monthly income after taxes and insurance</p>
             </div>
             <div>
-                <label class="block text-sm font-medium leading-6 text-gray-900">Weeks Worked per Year</label>
-                <input type="number" x-model="defaults.weeksWorked"
-                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <label for="weeks-worked" class="block text-sm font-medium leading-6 text-gray-900">Weeks Worked per Year</label>
+                <input type="number" x-model="defaults.weeksWorked" id="weeks-worked"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    aria-describedby="weeks-worked-description">
+                <p id="weeks-worked-description" class="sr-only">Enter the number of weeks you work per year</p>
             </div>
             <div>
-                <label class="block text-sm font-medium leading-6 text-gray-900">Hours Worked per Week</label>
-                <input type="number" x-model="defaults.hoursPerWeek"
-                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <label for="hours-per-week" class="block text-sm font-medium leading-6 text-gray-900">Hours Worked per Week</label>
+                <input type="number" x-model="defaults.hoursPerWeek" id="hours-per-week"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    aria-describedby="hours-per-week-description">
+                <p id="hours-per-week-description" class="sr-only">Enter the number of hours you work per week</p>
             </div>
             <div>
-                <label class="block text-sm font-medium leading-6 text-gray-900">Tax Rate (as decimal)</label>
-                <input type="number" step="0.01" x-model="defaults.taxRate"
-                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <label for="tax-rate" class="block text-sm font-medium leading-6 text-gray-900">Tax Rate (as decimal)</label>
+                <input type="number" step="0.01" x-model="defaults.taxRate" id="tax-rate"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    aria-describedby="tax-rate-description">
+                <p id="tax-rate-description" class="sr-only">Enter your tax rate as a decimal (e.g., 0.25 for 25%)</p>
             </div>
             <div>
-                <label for="monthly-health-insurance" class="block text-sm font-medium leading-6 text-gray-900">Monthly
-                    Health Insurance Cost</label>
+                <label for="monthly-health-insurance" class="block text-sm font-medium leading-6 text-gray-900">Monthly Health Insurance Cost</label>
                 <div class="mt-2 flex rounded-md shadow-sm">
-                    <span
-                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">$</span>
+                    <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm" aria-hidden="true">$</span>
                     <input type="number" x-model="defaults.monthlyHealthInsuranceCost" id="monthly-health-insurance"
-                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        aria-describedby="monthly-health-insurance-description">
                 </div>
+                <p id="monthly-health-insurance-description" class="sr-only">Enter your monthly health insurance cost</p>
             </div>
-            <button @click="calculateHourlyRate()"
-                class="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full">Calculate Hourly
-                Rate</button>
-            <p class="mt-4 text-xl">Required Hourly Rate: $<span class="font-bold"
-                    x-text="calculatedHourlyRate.toFixed(2)"></span></p>
+            <button @click="calculateHourlyRate()" class="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full">
+                Calculate Hourly Rate
+            </button>
+            <p class="mt-4 text-xl" aria-live="polite">Required Hourly Rate: $<span class="font-bold" x-text="calculatedHourlyRate.toFixed(2)"></span></p>
         </div>
 
         <div>
@@ -108,7 +113,7 @@
             <p class="text-xs text-center text-gray-300 mt-8"> Copyright <span x-text="new Date().getFullYear()"></span> Arter LLC. Built by <a href="https://dynamik.dev">Dynamik Dev</a></p>
         </div>
     
-    </div>
+    </main>
 
 
 </body>

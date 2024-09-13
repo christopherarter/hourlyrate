@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js, Tailwind CSS, and Local Calculator.js Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+
+</head>
+
+<body class="bg-gradient-to-b from-gray-900 to-orange-900 via-gray-900 p-8 h-screen md:flex md:flex-col md:justify-center">
+    <div x-data="calculator()" class="max-w-md mx-auto md:max-w-2xl">
+        <div class="flex flex-col mb-8 text-white">
+            <div class="flex gap-2 items-center justify-center mb-8">
+                <div class="w-10 bg-orange-500 rounded-full py-1 px-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                        stroke="currentColor" className="">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                            d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-center text-orange-500">
+                    HourlyRate.fyi
+                </h1>
+            </div>
+            <p class="text-lg text-center">This is a <strong>US-based</strong> calculator to give you an idea of what
+                you need to charge to hit
+                your desired monthly income. It is not intended to be a replacement for a professional financial
+                advisor.
+            </p>
+
+        </div>
+        <div class="space-y-4 bg-white rounded-xl shadow-2xl overflow-hidden p-6">
+            <div>
+                <label for="desired-monthly-income" class="block text-sm font-medium leading-6 text-gray-900">Desired
+                    Monthly Income (after taxes & insurance)</label>
+                <div class="mt-2 flex rounded-md shadow-sm">
+                    <span
+                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">$</span>
+                    <input type="number" x-model="defaults.desiredMonthlyIncome" id="desired-monthly-income"
+                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium leading-6 text-gray-900">Weeks Worked per Year</label>
+                <input type="number" x-model="defaults.weeksWorked"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div>
+                <label class="block text-sm font-medium leading-6 text-gray-900">Hours Worked per Week</label>
+                <input type="number" x-model="defaults.hoursPerWeek"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div>
+                <label class="block text-sm font-medium leading-6 text-gray-900">Tax Rate (as decimal)</label>
+                <input type="number" step="0.01" x-model="defaults.taxRate"
+                    class="px-3 mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div>
+                <label for="monthly-health-insurance" class="block text-sm font-medium leading-6 text-gray-900">Monthly
+                    Health Insurance Cost</label>
+                <div class="mt-2 flex rounded-md shadow-sm">
+                    <span
+                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">$</span>
+                    <input type="number" x-model="defaults.monthlyHealthInsuranceCost" id="monthly-health-insurance"
+                        class="px-3 block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+            <button @click="calculateHourlyRate()"
+                class="mt-8 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded w-full">Calculate Hourly
+                Rate</button>
+            <p class="mt-4 text-xl">Required Hourly Rate: $<span class="font-bold"
+                    x-text="calculatedHourlyRate.toFixed(2)"></span></p>
+        </div>
+
+        <div>
+            <p class="text-center text-white mt-8"> Inspired by Ash Allen <a href="https://web-dev-freelancing.com" target="_blank" class="text-orange-500">Web Dev Freelancing</a></p>
+            <p class="text-xs text-center text-gray-300 mt-2"> Copyright <span x-text="new Date().getFullYear()"></span> Arter LLC. Built by <a href="https://dynamik.dev">Dynamik Dev</a></p>
+        </div>
+    
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    function calculator() {
+        return {
+            defaults: {
+                weeksWorked: 46,
+                desiredMonthlyIncome: 5000,
+                taxRate: 0.25,
+                monthlyHealthInsuranceCost: 400,
+                hoursPerWeek: 32,
+            },
+            calculatedHourlyRate: 0,
+
+            calculateHourlyRate() {
+                const totalWeeklyHours = this.defaults.hoursPerWeek * this.defaults.weeksWorked;
+                const annualDesiredIncome = this.defaults.desiredMonthlyIncome * 12;
+                const annualHealthInsuranceCost = this.defaults.monthlyHealthInsuranceCost * 12;
+
+                // Calculate pre-tax income needed
+                const preTaxIncome = annualDesiredIncome / (1 - this.defaults.taxRate);
+
+                // Add health insurance
+                const totalPreTaxIncome = preTaxIncome + annualHealthInsuranceCost;
+
+                this.calculatedHourlyRate = totalPreTaxIncome / totalWeeklyHours;
+            }
+        }
+    }
+</script>
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+    }
+</style>

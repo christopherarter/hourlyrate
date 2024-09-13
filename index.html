@@ -20,7 +20,7 @@
 </head>
 
 <body class="bg-gradient-to-b from-gray-900 to-orange-900 via-gray-900 p-8 h-screen md:flex md:flex-col md:justify-center">
-    <div x-data="calculator()" class="max-w-md mx-auto md:max-w-2xl">
+    <div x-data="calculator()" x-init="calculateHourlyRate()" class="max-w-md mx-auto md:max-w-2xl">
         <div class="flex flex-col mb-8 text-white">
             <div class="flex gap-2 items-center justify-center mb-8">
                 <div class="w-10 bg-orange-500 rounded-full py-1 px-1">
@@ -86,7 +86,7 @@
 
         <div>
             <p class="text-center text-white mt-8"> Inspired by Ash Allen <a href="https://web-dev-freelancing.com" target="_blank" class="text-orange-500">Web Dev Freelancing</a></p>
-            <p class="text-xs text-center text-gray-300 mt-2"> Copyright <span x-text="new Date().getFullYear()"></span> Arter LLC. Built by <a href="https://dynamik.dev">Dynamik Dev</a></p>
+            <p class="text-xs text-center text-gray-300 mt-8"> Copyright <span x-text="new Date().getFullYear()"></span> Arter LLC. Built by <a href="https://dynamik.dev">Dynamik Dev</a></p>
         </div>
     
     </div>
@@ -119,6 +119,10 @@
                 const totalPreTaxIncome = preTaxIncome + annualHealthInsuranceCost;
 
                 this.calculatedHourlyRate = totalPreTaxIncome / totalWeeklyHours;
+            },
+
+            init() {
+                this.calculateHourlyRate();
             }
         }
     }
